@@ -1,1 +1,1 @@
-# r2SGLD
+# Reflected replica exchange Langevin Monte Carlo
