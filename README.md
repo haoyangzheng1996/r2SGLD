@@ -12,3 +12,4 @@
 
 
 
+![sgld_flower_20240511](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/d3b080f3-c2de-456a-8557-3e184a9012eb)
