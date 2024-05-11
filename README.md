@@ -10,5 +10,5 @@
 }
 ```
 
+![sgld_flower_20240511](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/9b89d6e0-081a-4c64-9795-e443afd756f5)
 
-![sgld_flower_20240511](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/b16e0024-6864-46ca-914f-c8e01375e758)
