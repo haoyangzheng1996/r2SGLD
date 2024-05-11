@@ -1,5 +1,3 @@
-# Bayesian Uncertainty Quantification in Model Discovery with Gradient Langevin Algorithms
-
 # Prerequisites
 Please refer to "environment.yml" 
 
