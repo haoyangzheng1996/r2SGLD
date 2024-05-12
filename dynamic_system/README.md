@@ -1,6 +1,6 @@
 # Identify Dynamic Systems
+![image](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/786c2e29-ff1f-4625-b8b6-dc9d0ea8e169)
 
-[ode_framework.pdf](https://github.com/haoyangzheng1996/r2SGLD/files/15287094/ode_framework.pdf)
 
 # Prerequisites
 Please refer to "env_dynamic_multimodal.yml" 
