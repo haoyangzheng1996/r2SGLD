@@ -112,9 +112,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Grid search')
     parser.add_argument('-sn', default=1000, type=int, help='Sampling Epochs')
     parser.add_argument('-wdecay', default=5, type=float,
-                        help='Samling weight decay (equivalent to 5e-4 in non-Bayes settings)')
+                        help='Samling weight decay (equivalent to 1e-4 in non-Bayes settings)')
     parser.add_argument('-lr', default=2e-5, type=float,
-                        help='Sampling learning rate (equivalent to 0.1 in non-Bayes settings)')
+                        help='Sampling learning rate (equivalent to 1.0 in non-Bayes settings)')
     parser.add_argument('-momentum', default=0.9, type=float, help='Sampling momentum learning rate')
     parser.add_argument('-burn', default=0.6, type=float, help='burn in iterations for sampling (sn * burn)')
     parser.add_argument('-regularization', default=None, type=float, help='L2 regularization')
