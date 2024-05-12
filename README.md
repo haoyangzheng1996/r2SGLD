@@ -22,12 +22,27 @@ For dynamic system identification and multi-modal simulation, please refer to "*
 For image classification, please refer to "**env_image_classification.yml**".
 
 # Dynamic System Identification
+See 
+```
+./dynamic_system
+```
+
 ![image](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/786c2e29-ff1f-4625-b8b6-dc9d0ea8e169)
 
 # Multi-modal Simulation
+See 
+```
+./multimodal_simulation
+```
+
 ![sgld_flower_20240511](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/9b89d6e0-081a-4c64-9795-e443afd756f5)
 
 # Image Classification
+See 
+```
+./image_classification
+```
+
 ![image](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/1fbe8629-5d59-4912-8516-e853c9d6167f)
 
 
