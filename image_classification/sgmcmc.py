@@ -48,12 +48,12 @@ class Sampler:
         for param in net.parameters():
             p = torch.zeros_like(param.data)
             self.velocity.append(p)
-        
+
         if regularization is None:
             self.regularization = 0.0
         else:
             self.regularization = regularization
-        
+
     def set_T(self, factor=1):
         self.T /= factor
         self.scale = self.sigma * np.sqrt(self.T)
@@ -72,7 +72,7 @@ class Sampler:
         if self.regularization != 0:
             l2_loss = torch.mean(torch.tensor([param.pow(2.0).mean() for param in self.net.parameters()]))
             loss = loss + 0.5 * self.regularization * l2_loss
-        
+
         loss.backward()
         return loss
 

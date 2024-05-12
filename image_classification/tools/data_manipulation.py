@@ -1,8 +1,6 @@
 from __future__ import division
 from itertools import combinations_with_replacement
 import numpy as np
-import math
-import sys
 
 
 def shuffle_data(X, y, seed=None):
@@ -18,7 +16,7 @@ def batch_iterator(X, y=None, batch_size=64):
     """ Simple batch generator """
     n_samples = X.shape[0]
     for i in np.arange(0, n_samples, batch_size):
-        begin, end = i, min(i+batch_size, n_samples)
+        begin, end = i, min(i + batch_size, n_samples)
         if y is not None:
             yield X[begin:end], y[begin:end]
         else:
@@ -47,12 +45,12 @@ def polynomial_features(X, degree):
         combs = [combinations_with_replacement(range(n_features), i) for i in range(0, degree + 1)]
         flat_combs = [item for sublist in combs for item in sublist]
         return flat_combs
-    
+
     combinations = index_combinations()
     n_output_features = len(combinations)
     X_new = np.empty((n_samples, n_output_features))
-    
-    for i, index_combs in enumerate(combinations):  
+
+    for i, index_combs in enumerate(combinations):
         X_new[:, i] = np.prod(X[:, index_combs], axis=1)
 
     return X_new
@@ -69,7 +67,7 @@ def get_random_subsets(X, y, n_subsets, replacements=True):
     # Uses 50% of training samples without replacements
     subsample_size = int(n_samples // 2)
     if replacements:
-        subsample_size = n_samples      # 100% with replacements
+        subsample_size = n_samples  # 100% with replacements
 
     for _ in range(n_subsets):
         idx = np.random.choice(

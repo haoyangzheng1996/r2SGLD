@@ -1,37 +1,13 @@
-import math
-import numpy as np
-import copy
-import sys
-import os
-import timeit
-import csv
-import dill
-from tqdm import tqdm
-from math import exp
-import random
-import pickle
-
-import numpy as np
-from numpy import genfromtxt
-
-from datasets import load_dataset
 import torch
-from torch.autograd import Variable
-import torch.nn.functional as Func
+import numpy as np
 import torch.nn as nn
-from torchvision import datasets
-
-from torchvision.datasets import ImageFolder
-from torchvision.transforms import ToTensor
-from torch.utils.data import DataLoader, Dataset
-
 import torch.utils.data as data
-import torchvision.datasets as datasets
-
+from datasets import load_dataset
 from torchvision import transforms
-from copy import deepcopy
-from sys import getsizeof
+from torch.autograd import Variable
+import torchvision.datasets as datasets
 from torchvision.models import ResNet50_Weights
+from torch.utils.data import DataLoader, Dataset
 
 
 def loader(train_size, test_size, args):

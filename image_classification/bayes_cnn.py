@@ -47,7 +47,6 @@ model_names = sorted(name for name in models.__dict__
 
 
 def main(pars):
-
     """ Step 0: Numpy printing setup and set GPU and Seeds """
     print(pars)
     np.set_printoptions(precision=3)
@@ -97,7 +96,7 @@ def main(pars):
     extra_loader = data.DataLoader(notcifar, batch_size=pars.batch, shuffle=False, num_workers=0)
     print('Load data successfully.')
     print('Training set: %.0f, Testing set: %.0f.' % (len(train_loader.dataset), len(test_loader.dataset)))
-    
+
     """ Step 3: Bayesian Sampling """
     if pars.optimizer == 'resgld':
         trainer_resgld(nets, train_loader, test_loader, extra_loader, pars)
@@ -108,7 +107,6 @@ def main(pars):
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(description='Grid search')
     parser.add_argument('-sn', default=500, type=int, help='Sampling Epochs')
     parser.add_argument('-wdecay', default=25, type=float,
@@ -158,7 +156,5 @@ if __name__ == "__main__":
                         help='model architecture: ' + ' | '.join(model_names) + ' (default: resnet18)')
 
     pars = parser.parse_args()
-    
-    main(pars)
 
-            
+    main(pars)
