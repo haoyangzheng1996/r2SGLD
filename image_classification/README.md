@@ -3,14 +3,7 @@
 
 
 ### Requirement
-Please refer to "environment.yml"
-
-
-<p float="left">
-  <img src="output/SGLD.gif" width="270" title="SGLD"/>
-  <img src="output/reSGLD_vs_VR_reSGLD.gif" width="500" alt="Made with Angular" title="Angular" /> 
-</p>
-
+Please refer to "env_image_classification.yml"
 
 Please cite our paper if you find it useful in uncertainty estimations
 
@@ -24,15 +17,14 @@ Please cite our paper if you find it useful in uncertainty estimations
 }
 ```
 
-
-
 ## Classification: ResNet on CIFAR100
 
 Please run:
 ```python
 $ python bayes_cnn.py -sn 1000 -chains 4 -lr 2e-5 -wdecay 5 -bias_F 1.5e7 -if_domain True -bound 4.0 -batch 2048
 ```
-
+## Results
+![image](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/94c0f090-f80d-47f8-986a-ecdb0c5fa9aa)
 
 ## References:
 This repo is built upon [Replica Exchange Stochastic Gradient MCMC](https://github.com/WayneDW/Variance_Reduced_Replica_Exchange_SGMCMC/tree/main)
