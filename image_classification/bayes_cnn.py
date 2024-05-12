@@ -47,6 +47,7 @@ model_names = sorted(name for name in models.__dict__
 
 
 def main(pars):
+
     """ Step 0: Numpy printing setup and set GPU and Seeds """
     print(pars)
     np.set_printoptions(precision=3)
@@ -96,7 +97,7 @@ def main(pars):
     extra_loader = data.DataLoader(notcifar, batch_size=pars.batch, shuffle=False, num_workers=0)
     print('Load data successfully.')
     print('Training set: %.0f, Testing set: %.0f.' % (len(train_loader.dataset), len(test_loader.dataset)))
-
+    
     """ Step 3: Bayesian Sampling """
     if pars.optimizer == 'resgld':
         trainer_resgld(nets, train_loader, test_loader, extra_loader, pars)
@@ -107,11 +108,12 @@ def main(pars):
 
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(description='Grid search')
     parser.add_argument('-sn', default=500, type=int, help='Sampling Epochs')
-    parser.add_argument('-wdecay', default=25, type=float,
+    parser.add_argument('-wdecay', default=5, type=float,
                         help='Samling weight decay (equivalent to 5e-4 in non-Bayes settings)')
-    parser.add_argument('-lr', default=2e-6, type=float,
+    parser.add_argument('-lr', default=2e-5, type=float,
                         help='Sampling learning rate (equivalent to 0.1 in non-Bayes settings)')
     parser.add_argument('-momentum', default=0.9, type=float, help='Sampling momentum learning rate')
     parser.add_argument('-burn', default=0.6, type=float, help='burn in iterations for sampling (sn * burn)')
@@ -135,16 +137,16 @@ if __name__ == "__main__":
     parser.add_argument('-data', default='cifar100', dest='data', help='CIFAR10/ CIFAR100')
     parser.add_argument('-depth', type=int, default=20, help='ResNet depth')
     parser.add_argument('-total', default=50000, type=int, help='Total data points')
-    parser.add_argument('-batch', default=256, type=int, help='Batch size')
-    parser.add_argument('-seed', default=2048, type=int, help='Random Seed')
+    parser.add_argument('-batch', default=2048, type=int, help='Batch size')
+    parser.add_argument('-seed', default=3407, type=int, help='Random Seed')
     parser.add_argument('-gpu', default=0, type=int, help='Default GPU')
     parser.add_argument('-alpha', default=0.3, type=float, help='forgetting rate')
-    parser.add_argument('-bias_F', default=1.5e5, type=float, help='correction factor F')
+    parser.add_argument('-bias_F', default=1.5e7, type=float, help='correction factor F')
     parser.add_argument('-cycle', default=1, type=int, help='Number of cycles')
 
     parser.add_argument('-if_domain', default=True, type=lambda x: bool(distutils.util.strtobool(x)),
                         help='save samples and kl-divergence')
-    parser.add_argument('-bound', default=1.0, type=float, help='Parameter bound')
+    parser.add_argument('-bound', default=4.0, type=float, help='Parameter bound')
     parser.add_argument("-optimizer", default="resgld", type=str, help="Optimizer")
     parser.add_argument('-save_after', default=None, type=int, help='Save model after x epochs')
     parser.add_argument('-load', default=False, type=lambda x: bool(distutils.util.strtobool(x)),
@@ -156,5 +158,7 @@ if __name__ == "__main__":
                         help='model architecture: ' + ' | '.join(model_names) + ' (default: resnet18)')
 
     pars = parser.parse_args()
-
+    
     main(pars)
+
+            
