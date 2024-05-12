@@ -14,8 +14,8 @@
 
 # Multi-modal Simulation
 ![sgld_flower_20240511](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/9b89d6e0-081a-4c64-9795-e443afd756f5)
-![image](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/ae2cd676-136b-4a30-a0dc-0250f83c0b2b)
 
 # Image Classification
-![image](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/94c0f090-f80d-47f8-986a-ecdb0c5fa9aa)
+![image](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/1fbe8629-5d59-4912-8516-e853c9d6167f)
+
 
