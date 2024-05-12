@@ -61,3 +61,8 @@ $ python bayes_cnn.py -chains 4 -if_domain True
 
 ## References:
 This repo is built upon [Replica Exchange Stochastic Gradient MCMC](https://github.com/WayneDW/Variance_Reduced_Replica_Exchange_SGMCMC/tree/main)
+
+1. Max Welling, and Yee W. Teh. "[Bayesian Learning via Stochastic Gradient Langevin Dynamics.](https://dl.acm.org/doi/10.5555/3104482.3104568)" ICML 2011.
+2. Wei Deng, Qi Feng, Liyao Gao, Faming Liang, and Guang Lin. "[Non-convex Learning via Replica Exchange Stochastic Gradient MCMC.](https://proceedings.mlr.press/v119/deng20b.html)" ICML 2020.
+3. Wei Deng, Qi Feng, Georgios P. Karagiannis, Guang Lin, and Faming Liang. "[Accelerating Convergence of Replica Exchange Stochastic Gradient MCMC via Variance Reduction.](https://openreview.net/forum?id=iOnhIy-a-0n)" ICLR 2020.
+4. Haoyang Zheng, Hengrong Du, Qi Feng, Wei Deng, and Guang Lin. "[Constrained Exploration via Reflected Replica Exchange Stochastic Gradient Langevin Dynamics.]()" ICML 2024.
