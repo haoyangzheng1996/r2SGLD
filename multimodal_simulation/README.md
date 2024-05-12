@@ -1,10 +1,10 @@
 # Multi-modal Simulation
 
 
-# Prerequisites
+## Prerequisites
 Please refer to "env_dynamic_multimodal.yml" 
 
-# Usage
+## Usage
 For SGLD, please run:
 ```
 python3 python sample_with_bound.py --optimizer 'sgld' --lr 5e-4 --num_points 1000 --save_after 10 --n_epoch 500000 --domain_type flower --if_include_domain True --radius 2
