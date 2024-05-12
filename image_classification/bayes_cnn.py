@@ -1,45 +1,24 @@
 #!/usr/bin/python
-
-
 """
 Created on May 12, 2024
 @author: Haoyang Zheng & Wei Deng
 Code for Constrained Exploration via Reflected Replica Exchange Stochastic Gradient Langevin Dynamics. ICML 2024
 This repository is built upon github.com/WayneDW/Variance_Reduced_Replica_Exchange_SGMCMC
 """
-
-import math
-import copy
-import sys
 import os
-import timeit
-import csv
-import argparse
-import distutils.util
-from tqdm import tqdm
-from math import exp
-from sys import getsizeof
-import numpy as np
+import torch
 import random
 import pickle
-import torch
-from torch.autograd import Variable
+import argparse
 import numpy as np
-import torch.nn as nn
-from torchvision import datasets, transforms
-from torchvision.datasets import ImageFolder
-from torchvision.transforms import ToTensor
-from torch.utils.data import DataLoader
+import distutils.util
+from tools import loader
 import torch.utils.data as data
-import torchvision.datasets as datasets
-
-from tools import loader, load_ImageNet
+import models.cifar as cifar_models
+import torchvision.models as models
+from torchvision import datasets, transforms
 from trainer import trainer_resgld, trainer_csgld
 
-import models.cifar as cifar_models
-
-import torchvision.models as models
-from torchvision.models import resnet50, ResNet50_Weights
 
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith("__")
@@ -47,7 +26,6 @@ model_names = sorted(name for name in models.__dict__
 
 
 def main(pars):
-
     """ Step 0: Numpy printing setup and set GPU and Seeds """
     print(pars)
     np.set_printoptions(precision=3)
@@ -97,7 +75,7 @@ def main(pars):
     extra_loader = data.DataLoader(notcifar, batch_size=pars.batch, shuffle=False, num_workers=0)
     print('Load data successfully.')
     print('Training set: %.0f, Testing set: %.0f.' % (len(train_loader.dataset), len(test_loader.dataset)))
-    
+
     """ Step 3: Bayesian Sampling """
     if pars.optimizer == 'resgld':
         trainer_resgld(nets, train_loader, test_loader, extra_loader, pars)
@@ -108,7 +86,6 @@ def main(pars):
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(description='Grid search')
     parser.add_argument('-sn', default=1000, type=int, help='Sampling Epochs')
     parser.add_argument('-wdecay', default=5, type=float,
@@ -158,7 +135,6 @@ if __name__ == "__main__":
                         help='model architecture: ' + ' | '.join(model_names) + ' (default: resnet18)')
 
     pars = parser.parse_args()
-    
+
     main(pars)
 
-            
