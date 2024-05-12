@@ -1,4 +1,5 @@
-# Identify Dynamic Systems
+# Dynamic System Identification
+
 ![image](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/786c2e29-ff1f-4625-b8b6-dc9d0ea8e169)
 
 
