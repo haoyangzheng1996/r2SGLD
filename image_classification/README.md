@@ -12,10 +12,8 @@ Please cite our paper if you find it useful in uncertainty estimations
 }
 ```
 
-
 ## Requirement
 Please refer to "env_image_classification.yml"
-
 
 ## ResNet on CIFAR100
 For SGDM, please run:
@@ -50,12 +48,12 @@ $ python bayes_cnn.py -optimizer csgld -lr 4e-5 -if_domain True
 
 For reSGHMC, please run:
 ```python
-$ python bayes_cnn.py -chains 4 5 -if_domain False
+$ python bayes_cnn.py -chains 4 -if_domain False
 ```
 
 For r2SGHMC, please run:
 ```python
-$ python bayes_cnn.py -chains 4 5 -if_domain True
+$ python bayes_cnn.py -chains 4 -if_domain True
 ```
 
 ## Results
