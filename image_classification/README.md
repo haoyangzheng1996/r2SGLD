@@ -1,10 +1,5 @@
 # Reflected Replica Exchange Stochastic Gradient Langevin Dynamics
 
-
-
-### Requirement
-Please refer to "env_image_classification.yml"
-
 Please cite our paper if you find it useful in uncertainty estimations
 
 ```
@@ -16,6 +11,11 @@ Please cite our paper if you find it useful in uncertainty estimations
   organization={PMLR}
 }
 ```
+
+
+## Requirement
+Please refer to "env_image_classification.yml"
+
 
 ## Classification: ResNet on CIFAR100
 
