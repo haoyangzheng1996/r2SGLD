@@ -53,22 +53,10 @@ class cyclicSGLD(SGLD):
     def __init__(self, dim=None, xinit=None,
                  batch_size=128, lr=0.1, T=1.0, M=4, total_epoch=4e5, myHelp=None):
         super(cyclicSGLD, self).__init__(dim=dim, xinit=xinit, batch_size=batch_size, lr=lr, T=T, myHelp=myHelp)
-        # self.f = f
-        # self.dim = dim
-        # self.T = T
+
         self.M = M
         self.total_epoch = total_epoch
         self.lr0 = lr
-        # self.lr = lr
-        # self.batch_size = batch_size
-
-        # initialization for SGLD
-        self.x = np.array(xinit)
-
-        if myHelp is not None:
-            self.myHelper = myHelp
-        else:
-            self.myHelper = None
 
     def adjust_learning_rate(self, iters):
         cos_inner = np.pi * (iters % (self.total_epoch * self.batch_size // self.M))
@@ -92,12 +80,8 @@ class reSGLD(SGLD):
                  myHelp=None, momentum=0.9, wdecay=5e-4, total=50000, n_chain=2,
                  flags=None):
         super(reSGLD, self).__init__(dim=dim, xinit=xinit, batch_size=batch_size, lr=lr, myHelp=myHelp, flags=flags)
-        # self.dim = dim
-        # self.decay_lr = decay_lr
-        self.batch_size = batch_size
 
-        # initialization for SGLD
-        self.x = np.array(xinit)
+        self.batch_size = batch_size
         self.n_chain = n_chain
         self.x_sub = []
         self.lr = []
@@ -106,7 +90,6 @@ class reSGLD(SGLD):
             # self.lr.append(lr)
             self.lr.append(lr * 10 ** i)
 
-        # self.momentum = momentum
         self.T = []
         if flags is None:
             self.T.append(1)
@@ -125,31 +108,9 @@ class reSGLD(SGLD):
                 self.hat_var = 10
                 self.threshold = 1e-3
 
-        # self.wdecay = wdecay
-        # self.V = 0.1
-        # self.velocity = []
-        # self.criterion = criterion
         self.total = total
-
-        # self.beta = 0.5 * self.V * lr
-        # self.alpha = 1 - self.momentum
-
-        # if self.beta > self.alpha:
-        #     sys.exit('Momentum is too large')
-
-        # if myHelp is not None:
-        #     self.myHelper = myHelp
-        # else:
-        #     self.myHelper = None
-
         self.swap_total = 0
         self.no_swap_total = 0
-
-    # def stochastic_grad(self, Theta, dxdt, para):
-    #     return np.dot(np.transpose(Theta), np.dot(Theta, para) - dxdt) / self.batch_size
-    #
-    # def stochastic_f(self, Theta, dxdt, para):
-    #     return np.sqrt(np.mean((np.dot(Theta, para) - dxdt) ** 2))
 
     def set_T(self, factor=1):
         self.T /= factor
@@ -160,18 +121,9 @@ class reSGLD(SGLD):
                 1 / self.T[1] - 1 / self.T[0]) * self.hat_var
         return np.exp((1 / self.T[1] - 1 / self.T[0]) * loss_diff_correct)
 
-    # def reflection(self, beta):
-    #     if self.myHelper.inside_domain():
-    #         return beta
-    #     else:
-    #         reflected_points = self.myHelper.get_reflection(beta)
-    #         """ when reflection fails in extreme cases (disappear with a small learning rate) """
-    #         return reflected_points
-
     def update(self, x, y):
 
         for i in range(self.n_chain):
-            # self.x_sub[i] = self.x_sub[i] - self.lr[i] * self.stochastic_grad(self.x_sub[i]) \
             proposal = self.x_sub[i] - self.lr[i] * self.stochastic_grad(x, y, self.x_sub[i]) \
                        + sqrt(2. * self.lr[i] * self.T[i]) * normal(size=self.dim)
             if self.myHelper is not None:
