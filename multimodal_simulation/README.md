@@ -25,7 +25,7 @@ You can also run:
 source main_sample.sh
 ```
 
-# Results
+## Results
 ![image](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/ae2cd676-136b-4a30-a0dc-0250f83c0b2b)
 
 # Kullback–Leibler Divergence
@@ -34,6 +34,6 @@ To plot KL divergence, please run:
 python3 python run_flower.py --num_points 100 --M 5 --warm_up 1000 --plot_after 500 --n_epoch 200000
 ```
 
-# Results
+## Results
 ![sgld_flower_20240511](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/9b89d6e0-081a-4c64-9795-e443afd756f5)
 
