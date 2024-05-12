@@ -110,7 +110,7 @@ def main(pars):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Grid search')
-    parser.add_argument('-sn', default=500, type=int, help='Sampling Epochs')
+    parser.add_argument('-sn', default=1000, type=int, help='Sampling Epochs')
     parser.add_argument('-wdecay', default=5, type=float,
                         help='Samling weight decay (equivalent to 5e-4 in non-Bayes settings)')
     parser.add_argument('-lr', default=2e-5, type=float,
