@@ -1,12 +1,9 @@
-import arviz as az
-import matplotlib.pyplot as plt
-import numpy as np
-import sys
-from tqdm import tqdm
-import scipy.io
+from model.utils import plot_trace
 from model.flags import get_flags
 from model.sampler import cyclicSGLD
-from model.utils import plot_trace, scatter_plot_3d
+from tqdm import tqdm
+import numpy as np
+import scipy.io
 
 
 if __name__ == "__main__":
@@ -25,13 +22,8 @@ if __name__ == "__main__":
 
     args = get_flags()
     args.hat_var = 9
-    # scatter_plot_3d(data['x'])
 
-    # seed = 3405
-    # seed = 3406
-    seed = 3407  # 9.98 28.04 2.66
-    # seed = 3408
-    # seed = 3409
+    seed = 3407
     np.random.seed(seed)
 
     Xi_correct = np.array([[-10, 28, 0], [10, -1, 0], [0, 0, -8 / 3], [0, 0, 1], [0, -1, 0]])
@@ -64,25 +56,17 @@ if __name__ == "__main__":
         if i >= 2e4:
             sample_record.append(np.expand_dims(sampler.x, axis=2))
 
+    # sampler.x = np.where(np.abs(sampler.x) < 0.08, 0, sampler.x)
+    # sampler.x[0, 2], sampler.x[1, 2] = 0, 0
+    # samples = np.concatenate(sample_record, axis=-1)
+    # sigma_1 = samples[0, 0]
+    # sigma_2 = samples[1, 0]
+    # rho = samples[0, 1]
+    # beta = samples[2, 2]
+    #
+    # plot_trace(sigma_1)
+    # plot_trace(sigma_2)
+    # plot_trace(rho)
+    # plot_trace(-1 * beta)
     print('Done')
-    sampler.x = np.where(np.abs(sampler.x) < 0.08, 0, sampler.x)
-    sampler.x[0, 2], sampler.x[1, 2] = 0, 0
-    samples = np.concatenate(sample_record, axis=-1)
-    sigma_1 = samples[0, 0]
-    sigma_2 = samples[1, 0]
-    rho = samples[0, 1]
-    beta = samples[2, 2]
 
-    plot_trace(sigma_1)
-    plot_trace(sigma_2)
-    plot_trace(rho)
-    plot_trace(-1 * beta)
-
-    print(sampler.x)
-    print(Xi_correct)
-
-    # # Least Square
-    # idx = np.random.choice(range(m), size=10, replace=False)
-    # np.linalg.lstsq(Theta[idx], dxdt[idx], rcond=None)[0]
-
-    np.save('./lorenz_cycsgld_sample.npy', samples)

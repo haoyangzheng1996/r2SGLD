@@ -1,12 +1,9 @@
-import arviz as az
-import matplotlib.pyplot as plt
-import numpy as np
-import sys
-from tqdm import tqdm
-import scipy.io
+from model.utils import plot_trace
 from model.flags import get_flags
 from model.sampler import SGLD
-from model.utils import plot_trace, scatter_plot_3d
+from tqdm import tqdm
+import numpy as np
+import scipy.io
 
 
 if __name__ == '__main__':
@@ -28,8 +25,8 @@ if __name__ == '__main__':
     seed = args.seed
     np.random.seed(seed)
 
-    Xi_correct = np.array([[-10, 28, 0], [10, -1, 0], [0, 0, -8/3], [0, 0, 1], [0, -1, 0]])
-    Theta = np.hstack([x, y, z, x*y, x*z])
+    Xi_correct = np.array([[-10, 28, 0], [10, -1, 0], [0, 0, -8 / 3], [0, 0, 1], [0, -1, 0]])
+    Theta = np.hstack([x, y, z, x * y, x * z])
 
     dims = [Theta.shape[1], dxdt.shape[1]]
     Xi = np.ones(dims) * 0
@@ -51,37 +48,28 @@ if __name__ == '__main__':
             idx = idx_random[j * batch_size:(j + 1) * batch_size]
             Theta_batch = Theta[idx]
             dxdt_batch = dxdt[idx]
-            iter = i*batch_size + j
+            iter = i * batch_size + j
             sampler.update(Theta_batch, dxdt_batch)
 
         epoch_run.set_postfix({
             'loss': '{0:1.4e}'.format(np.sqrt(np.mean((np.dot(Theta_batch, sampler.x) - dxdt_batch) ** 2))),
             'learn rate': '{0:1.4e}'.format(sampler.lr)})
         if i >= 1e4:
-            sampler.lr *= 0.9999
+            sampler.lr *= args.decay_rate
             if i >= 2e4:
                 sample_record.append(np.expand_dims(sampler.x, axis=2))
 
-
+    # sampler.x = np.where(np.abs(sampler.x) < 0.08, 0, sampler.x)
+    # sampler.x[0, 2], sampler.x[1, 2] = 0, 0
+    # samples = np.concatenate(sample_record, axis=-1)
+    # sigma_1 = samples[0, 0]
+    # sigma_2 = samples[1, 0]
+    # rho = samples[0, 1]
+    # beta = samples[2, 2]
+    #
+    # plot_trace(sigma_1)
+    # plot_trace(sigma_2)
+    # plot_trace(rho)
+    # plot_trace(-1 * beta)
     print('Done')
-    sampler.x = np.where(np.abs(sampler.x) < 0.08, 0, sampler.x)
-    sampler.x[0, 2], sampler.x[1, 2] = 0, 0
-    samples = np.concatenate(sample_record, axis=-1)
-    sigma_1 = samples[0, 0]
-    sigma_2 = samples[1, 0]
-    rho = samples[0, 1]
-    beta = samples[2, 2]
 
-    plot_trace(sigma_1)
-    plot_trace(sigma_2)
-    plot_trace(rho)
-    plot_trace(-1*beta)
-
-    print(sampler.x)
-    print(Xi_correct)
-
-    # # Least Square
-    # idx = np.random.choice(range(m), size=10, replace=False)
-    # np.linalg.lstsq(Theta[idx], dxdt[idx], rcond=None)[0]
-
-    np.save('./lorenz_sgld_sample.npy', samples)

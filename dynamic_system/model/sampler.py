@@ -6,120 +6,9 @@ from scipy.spatial.distance import pdist, squareform
 import sys
 
 
-class reSGLD:
-    def __init__(self, dim=None, xinit=None, lr=0.1, decay_lr=100., batch_size=1024,
-                 myHelp=None, momentum=0.9, wdecay=5e-4, total=50000, n_chain=2,
-                 flags=None):
-
-        # self.f = f
-        self.dim = dim
-        self.decay_lr = decay_lr
-        self.batch_size = batch_size
-
-        # initialization for SGLD
-        self.x = np.array(xinit)
-        self.n_chain = n_chain
-        self.x_sub = []
-        self.lr = []
-        for i in range(n_chain):
-            self.x_sub.append(np.array(xinit))
-            # self.lr.append(lr)
-            self.lr.append(lr * 10 ** i)
-
-        self.momentum = momentum
-        self.T = []
-        if flags is None:
-            self.T.append(1)
-            self.T.append(10)
-            self.hat_var = 10
-            self.threshold = 3e-4
-        else:
-            try:
-                self.T.append(flags.T_low)
-                self.T.append(flags.T_high)
-                self.hat_var = flags.hat_var
-                self.threshold = flags.threshold
-            except:
-                self.T.append(1)
-                self.T.append(10)
-                self.hat_var = 10
-                self.threshold = 1e-3
-
-        self.wdecay = wdecay
-        self.V = 0.1
-        self.velocity = []
-        # self.criterion = criterion
-        self.total = total
-
-        self.beta = 0.5 * self.V * lr
-        self.alpha = 1 - self.momentum
-
-        if self.beta > self.alpha:
-            sys.exit('Momentum is too large')
-
-        # self.sigma = np.sqrt(2.0 * lr * (self.alpha - self.beta))
-        # self.scale = self.sigma * np.sqrt(self.T)
-
-        if myHelp is not None:
-            self.myHelper = myHelp
-        else:
-            self.myHelper = None
-
-        self.swap_total = 0
-        self.no_swap_total = 0
-
-    def stochastic_grad(self, Theta, dxdt, para):
-        return np.dot(np.transpose(Theta), np.dot(Theta, para)-dxdt) / self.batch_size
-
-    def stochastic_f(self, Theta, dxdt, para):
-        return np.sqrt(np.mean((np.dot(Theta, para)-dxdt) ** 2))
-
-    def set_T(self, factor=1):
-        self.T /= factor
-        self.scale = self.sigma * np.sqrt(self.T)
-
-    def correction(self, x, y):
-        loss_diff_correct = self.stochastic_f(x, y, self.x_sub[1]) - self.stochastic_f(x, y, self.x_sub[0]) - (
-                1 / self.T[1] - 1 / self.T[0]) * self.hat_var
-        return np.exp((1 / self.T[1] - 1 / self.T[0]) * loss_diff_correct)
-
-    def reflection(self, beta):
-        if self.myHelper.inside_domain():
-            return beta
-        else:
-            reflected_points = self.myHelper.get_reflection(beta)
-            """ when reflection fails in extreme cases (disappear with a small learning rate) """
-            return reflected_points
-
-    def update(self, x, y):
-
-        for i in range(self.n_chain):
-            # self.x_sub[i] = self.x_sub[i] - self.lr[i] * self.stochastic_grad(self.x_sub[i]) \
-            proposal = self.x_sub[i] - self.lr[i] * self.stochastic_grad(x, y, self.x_sub[i]) \
-                       + sqrt(2. * self.lr[i] * self.T[i]) * normal(size=self.dim)
-            if self.myHelper is not None:
-                self.x_sub[i] = self.reflection(proposal)
-            else:
-                self.x_sub[i] = proposal
-
-        """ Swap """
-        integrand_corrected = min(1, self.correction(x, y))
-        if self.threshold <= integrand_corrected:
-            sub = self.x_sub[1]
-            self.x_sub[1] = self.x_sub[0]
-            self.x_sub[0] = sub
-            self.swap_total += 1
-        else:
-            self.no_swap_total += 1
-
-        self.x = self.x_sub[0]
-
-
-
 class SGLD:
-    def __init__(self, f=None, dim=None, xinit=None, batch_size=128, lr=0.1, T=1.0, decay_lr=100.,
+    def __init__(self, dim=None, xinit=None, batch_size=128, lr=0.1, T=1.0, decay_lr=100.,
                  myHelp=None, flags=None):
-        self.f = f
         self.dim = dim
         self.lr = lr
         self.T = T
@@ -146,31 +35,32 @@ class SGLD:
             return reflected_points
 
     def stochastic_grad(self, Theta, dxdt, para):
-        return np.dot(np.transpose(Theta), np.dot(Theta, para)-dxdt) / self.batch_size
+        return np.dot(np.transpose(Theta), np.dot(Theta, para) - dxdt) / self.batch_size
 
-    def stochastic_f(self, beta):
-        return self.f(beta.tolist()) + 0.25 * normal(size=1)
+    def stochastic_f(self, Theta, dxdt, para):
+        return np.sqrt(np.mean((np.dot(Theta, para)-dxdt) ** 2))
 
     def update(self, x, y):
-        proposal = self.x - self.lr * self.stochastic_grad(x, y, self.x) + sqrt(2. * self.lr * self.T) * normal(size=self.dim)
+        proposal = self.x - self.lr * self.stochastic_grad(x, y, self.x) + sqrt(2. * self.lr * self.T) * normal(
+            size=self.dim)
         if self.myHelper is not None:
             self.x = self.reflection(proposal)
         else:
             self.x = proposal
 
 
-
-class cyclicSGLD:
-    def __init__(self, f=None, dim=None, xinit=None,
+class cyclicSGLD(SGLD):
+    def __init__(self, dim=None, xinit=None,
                  batch_size=128, lr=0.1, T=1.0, M=4, total_epoch=4e5, myHelp=None):
-        self.f = f
-        self.dim = dim
-        self.T = T
+        super(cyclicSGLD, self).__init__(dim=dim, xinit=xinit, batch_size=batch_size, lr=lr, T=T, myHelp=myHelp)
+        # self.f = f
+        # self.dim = dim
+        # self.T = T
         self.M = M
         self.total_epoch = total_epoch
         self.lr0 = lr
-        self.lr = lr
-        self.batch_size = batch_size
+        # self.lr = lr
+        # self.batch_size = batch_size
 
         # initialization for SGLD
         self.x = np.array(xinit)
@@ -187,20 +77,6 @@ class cyclicSGLD:
         lr = cos_out * self.lr0 / 2
         return np.max([lr, 1e-7])
 
-    def reflection(self, beta):
-        if self.myHelper.inside_domain():
-            return beta
-        else:
-            reflected_points = self.myHelper.get_reflection(beta)
-            """ when reflection fails in extreme cases (disappear with a small learning rate) """
-            return reflected_points
-
-    def stochastic_grad(self, Theta, dxdt, para):
-        return np.dot(np.transpose(Theta), np.dot(Theta, para)-dxdt) / self.batch_size
-
-    def stochastic_f(self, beta):
-        return self.f(beta.tolist()) + 0.25 * normal(size=1)
-
     def update(self, x, y, iters):
         self.lr = self.adjust_learning_rate(iters)
         proposal = self.x - self.lr * self.stochastic_grad(x, y, self.x) + \
@@ -209,3 +85,108 @@ class cyclicSGLD:
             self.x = self.reflection(proposal)
         else:
             self.x = proposal
+
+
+class reSGLD(SGLD):
+    def __init__(self, dim=None, xinit=None, lr=0.1, decay_lr=100., batch_size=1024,
+                 myHelp=None, momentum=0.9, wdecay=5e-4, total=50000, n_chain=2,
+                 flags=None):
+        super(reSGLD, self).__init__(dim=dim, xinit=xinit, batch_size=batch_size, lr=lr, myHelp=myHelp, flags=flags)
+        # self.dim = dim
+        # self.decay_lr = decay_lr
+        self.batch_size = batch_size
+
+        # initialization for SGLD
+        self.x = np.array(xinit)
+        self.n_chain = n_chain
+        self.x_sub = []
+        self.lr = []
+        for i in range(n_chain):
+            self.x_sub.append(np.array(xinit))
+            # self.lr.append(lr)
+            self.lr.append(lr * 10 ** i)
+
+        # self.momentum = momentum
+        self.T = []
+        if flags is None:
+            self.T.append(1)
+            self.T.append(10)
+            self.hat_var = 10
+            self.threshold = 3e-4
+        else:
+            try:
+                self.T.append(flags.T_low)
+                self.T.append(flags.T_high)
+                self.hat_var = flags.hat_var
+                self.threshold = flags.threshold
+            except:
+                self.T.append(1)
+                self.T.append(10)
+                self.hat_var = 10
+                self.threshold = 1e-3
+
+        # self.wdecay = wdecay
+        # self.V = 0.1
+        # self.velocity = []
+        # self.criterion = criterion
+        self.total = total
+
+        # self.beta = 0.5 * self.V * lr
+        # self.alpha = 1 - self.momentum
+
+        # if self.beta > self.alpha:
+        #     sys.exit('Momentum is too large')
+
+        # if myHelp is not None:
+        #     self.myHelper = myHelp
+        # else:
+        #     self.myHelper = None
+
+        self.swap_total = 0
+        self.no_swap_total = 0
+
+    # def stochastic_grad(self, Theta, dxdt, para):
+    #     return np.dot(np.transpose(Theta), np.dot(Theta, para) - dxdt) / self.batch_size
+    #
+    # def stochastic_f(self, Theta, dxdt, para):
+    #     return np.sqrt(np.mean((np.dot(Theta, para) - dxdt) ** 2))
+
+    def set_T(self, factor=1):
+        self.T /= factor
+        self.scale = self.sigma * np.sqrt(self.T)
+
+    def correction(self, x, y):
+        loss_diff_correct = self.stochastic_f(x, y, self.x_sub[1]) - self.stochastic_f(x, y, self.x_sub[0]) - (
+                1 / self.T[1] - 1 / self.T[0]) * self.hat_var
+        return np.exp((1 / self.T[1] - 1 / self.T[0]) * loss_diff_correct)
+
+    # def reflection(self, beta):
+    #     if self.myHelper.inside_domain():
+    #         return beta
+    #     else:
+    #         reflected_points = self.myHelper.get_reflection(beta)
+    #         """ when reflection fails in extreme cases (disappear with a small learning rate) """
+    #         return reflected_points
+
+    def update(self, x, y):
+
+        for i in range(self.n_chain):
+            # self.x_sub[i] = self.x_sub[i] - self.lr[i] * self.stochastic_grad(self.x_sub[i]) \
+            proposal = self.x_sub[i] - self.lr[i] * self.stochastic_grad(x, y, self.x_sub[i]) \
+                       + sqrt(2. * self.lr[i] * self.T[i]) * normal(size=self.dim)
+            if self.myHelper is not None:
+                self.x_sub[i] = self.reflection(proposal)
+            else:
+                self.x_sub[i] = proposal
+
+        """ Swap """
+        integrand_corrected = min(1, self.correction(x, y))
+        if self.threshold <= integrand_corrected:
+            sub = self.x_sub[1]
+            self.x_sub[1] = self.x_sub[0]
+            self.x_sub[0] = sub
+            self.swap_total += 1
+        else:
+            self.no_swap_total += 1
+
+        self.x = self.x_sub[0]

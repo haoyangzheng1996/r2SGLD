@@ -1,12 +1,9 @@
-import arviz as az
-import matplotlib.pyplot as plt
-import numpy as np
-import sys
-from tqdm import tqdm
-import scipy.io
+from model.utils import plot_trace
 from model.flags import get_flags
 from model.sampler import reSGLD
-from model.utils import plot_trace, scatter_plot_3d
+from tqdm import tqdm
+import numpy as np
+import scipy.io
 
 
 if __name__ == '__main__':
@@ -38,7 +35,6 @@ if __name__ == '__main__':
     batch_size = int(args.batch)
     lr = args.lr
 
-    # optimizer = reSGLD(dim=dims, xinit=Xi_correct, batch_size=batch_size, lr=1e-10, n_chain=2)
     sampler = reSGLD(
         dim=dims, xinit=Xi, batch_size=batch_size, lr=3e-6, n_chain=2, flags=args)
     epoch_run = tqdm(range(epoch), dynamic_ncols=True, smoothing=0.1, desc='Start Training: ')
@@ -60,33 +56,24 @@ if __name__ == '__main__':
             'learn rate': '{0:1.4e}'.format(sampler.lr[0])})
         if i >= 1e4:
             for j in range(len(sampler.lr)):
-                sampler.lr[j] *= 0.9999
-                # sampler.x_sub[j] = np.where(np.abs(sampler.x_sub[j]) < 0.05, 0, sampler.x_sub[j])
-                # sampler.x_sub[j][0, 2], sampler.x_sub[j][1, 2] = 0, 0
+                sampler.lr[j] *= args.decay_rate
             if i >= 2e4:
                 sample_record.append(np.expand_dims(sampler.x_sub[0], axis=2))
 
-
+    # sampler.x = np.where(np.abs(sampler.x) < 0.08, 0, sampler.x)
+    # sampler.x[0, 2], sampler.x[1, 2] = 0, 0
+    # samples = np.concatenate(sample_record, axis=-1)
+    # sigma_1 = samples[0, 0]
+    # sigma_2 = samples[1, 0]
+    # rho = samples[0, 1]
+    # beta = samples[2, 2]
+    #
+    # plot_trace(sigma_1)
+    # plot_trace(sigma_2)
+    # plot_trace(rho)
+    # plot_trace(-1*beta)
+    #
+    # print(sampler.x)
+    # print(Xi_correct)
     print('Done')
-    sampler.x = np.where(np.abs(sampler.x) < 0.08, 0, sampler.x)
-    sampler.x[0, 2], sampler.x[1, 2] = 0, 0
-    samples = np.concatenate(sample_record, axis=-1)
-    sigma_1 = samples[0, 0]
-    sigma_2 = samples[1, 0]
-    rho = samples[0, 1]
-    beta = samples[2, 2]
 
-    plot_trace(sigma_1)
-    plot_trace(sigma_2)
-    plot_trace(rho)
-    plot_trace(-1*beta)
-
-    print(sampler.x)
-    print(Xi_correct)
-
-    # # Least Square
-    # idx = np.random.choice(range(m), size=10, replace=False)
-    # np.linalg.lstsq(Theta[idx], dxdt[idx], rcond=None)[0]
-
-    # np.save('./lorenz_resgld_sample.npy', samples)
-    # np.save('./lorenz_resgld_sample_reflect.npy', samples)
