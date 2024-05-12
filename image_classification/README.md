@@ -20,42 +20,42 @@ Please refer to "env_image_classification.yml"
 ## ResNet on CIFAR100
 For SGDM, please run:
 ```python
-$ python bayes_cnn.py -sn 1000 -chains 1 -lr 2e-5 -T 0 -if_domain False -batch 2048
+$ python bayes_cnn.py -T 0 -if_domain False
 ```
 
 For R-SGDM, please run:
 ```python
-$ python bayes_cnn.py -sn 1000 -chains 1 -lr 2e-5 -T 0 -if_domain True -batch 2048
+$ python bayes_cnn.py -T 0 -if_domain True
 ```
 
 For SGHMC, please run:
 ```python
-$ python bayes_cnn.py -sn 1000 -chains 1 -lr 2e-5 -bias_F 1.5e7 -if_domain False -batch 2048
+$ python bayes_cnn.py -if_domain False
 ```
 
 For R-SGHMC, please run:
 ```python
-$ python bayes_cnn.py -sn 1000 -chains 1 -lr 2e-5 -bias_F 1.5e7 -if_domain True -batch 2048
+$ python bayes_cnn.py -if_domain True
 ```
 
 For cycSGHMC, please run:
 ```python
-$ python bayes_cnn.py -optimizer csgld -sn 1000 -chains 1 -lr 4e-5 -bias_F 1.5e7 -if_domain False -batch 2048
+$ python bayes_cnn.py -optimizer csgld -lr 4e-5 -if_domain False
 ```
 
 For R-cycSGHMC, please run:
 ```python
-$ python bayes_cnn.py -optimizer csgld -sn 1000 -chains 1 -lr 4e-5 -bias_F 1.5e7 -if_domain True -batch 2048
+$ python bayes_cnn.py -optimizer csgld -lr 4e-5 -if_domain True
 ```
 
 For reSGHMC, please run:
 ```python
-$ python bayes_cnn.py -sn 1000 -chains 4 -lr 2e-5 5 -bias_F 1.5e7 -if_domain False -batch 2048
+$ python bayes_cnn.py -chains 4 5 -if_domain False
 ```
 
 For r2SGHMC, please run:
 ```python
-$ python bayes_cnn.py -sn 1000 -chains 4 -lr 2e-5 5 -bias_F 1.5e7 -if_domain True -batch 2048
+$ python bayes_cnn.py -chains 4 5 -if_domain True
 ```
 
 ## Results
