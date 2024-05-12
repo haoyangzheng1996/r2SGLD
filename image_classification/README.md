@@ -17,7 +17,7 @@ Please cite our paper if you find it useful in uncertainty estimations
 Please refer to "env_image_classification.yml"
 
 
-## Classification: ResNet on CIFAR100
+## ResNet on CIFAR100
 
 Please run:
 ```python
