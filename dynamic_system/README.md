@@ -10,24 +10,21 @@ For SGLD, please run:
 ```
 python3 lorenz_sgld.py
 ```
-[posterior_reflect_sgld.pdf](https://github.com/haoyangzheng1996/r2SGLD/files/15287096/posterior_reflect_sgld.pdf)
-![sgld_with](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/874646bf-415c-4eac-8093-108bba33d1f0)
+![reflect_sgld](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/22085320-2287-4763-8fd5-1f8d1349d5d0)
 
 
 For cycSGLD, please run:
 ```
 python3 lorenz_cycsgld.py
 ```
-[posterior_reflect_cycsgld.pdf](https://github.com/haoyangzheng1996/r2SGLD/files/15287097/posterior_reflect_cycsgld.pdf)
-![cycsgld_with](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/3784c1a6-37ee-405a-a0eb-3e6778c5449f)
+![reflect_cycsgld](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/728340a3-d130-4184-9639-5e9ac6880f0f)
 
 
 For SGLD, please run:
 ```
 python3 lorenz_resgld.py
 ```
-[posterior_reflect_resgld.pdf](https://github.com/haoyangzheng1996/r2SGLD/files/15287098/posterior_reflect_resgld.pdf)
-![resgld_with](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/89f48ce9-73db-4351-a153-6d101b7b70f5)
+![reflect_resgld](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/b97d315b-5f6a-40d2-aa06-76f95be41767)
 
 
 You can also run:
