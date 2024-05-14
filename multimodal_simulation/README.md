@@ -46,3 +46,8 @@ python3 python run_flower.py --num_points 100 --M 5 --warm_up 1000 --plot_after 
 ## Results
 ![sgld_flower_20240511](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/9b89d6e0-081a-4c64-9795-e443afd756f5)
 
+
+
+## References
+This repo is built upon [multi-modal simulation of reSGLD](https://github.com/WayneDW/Variance_Reduced_Replica_Exchange_SGMCMC/tree/main) and [reflected Schrödinger Bridge](https://arxiv.org/abs/2401.03228).
+
