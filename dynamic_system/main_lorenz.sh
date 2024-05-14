@@ -1,7 +1,5 @@
 clear
 
-conda activate uq
-
 python lorenz_sgld.py
 python lorenz_cycsgld.py
 python lorenz_resgld.py
