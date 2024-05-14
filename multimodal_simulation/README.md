@@ -43,7 +43,7 @@ python3 python run_flower.py --num_points 100 --M 5 --warm_up 1000 --plot_after 
 ```
 
 ## Results
-![sgld_flower_20240511](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/9b89d6e0-081a-4c64-9795-e443afd756f5)
+![flower_simulation](https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/0b504ccc-f3da-4704-8a26-7b6f19cdbfa9)
 
 
 
