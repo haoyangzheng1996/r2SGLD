@@ -1,7 +1,5 @@
 clear
 
-conda activate langevin
-
 # plot kl-divergence
 python run_flower.py --num_points 100 --M 5 --warm_up 1000 --plot_after 500 --n_epoch 100000
 
