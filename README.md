@@ -1,4 +1,5 @@
 # Reflected replica exchange Langevin Monte Carlo
+This is the code repository for [Constrained Exploration via Reflected Replica Exchange Stochastic Gradient Langevin Dynamics](https://arxiv.org/abs/2405.07839) (to appear in ICML 2024).
 
 ```
 @article{zheng2024constrained,
