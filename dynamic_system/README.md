@@ -40,3 +40,9 @@ You can also run:
 ```
 source main_lorenz.sh
 ```
+
+
+## References:
+
+Brunton, Steven L., Joshua L. Proctor, and J. Nathan Kutz. "[Discovering governing equations from data by sparse identification of nonlinear dynamical systems.](https://www.pnas.org/doi/full/10.1073/pnas.1517384113)" PNAS 2016.
+   
