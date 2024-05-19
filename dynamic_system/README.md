@@ -38,7 +38,7 @@ python3 lorenz_resgld.py
 
 You can also run:
 ```
-source main_lorenz.sh
+source run_lorenz.sh
 ```
 
 
