@@ -30,7 +30,7 @@ python3 sample_with_bound.py --optimizer 'resgld' --lr 5e-4 --lr_gap 3.0 --hat_v
 
 You can also run:
 ```
-source main_sample.sh
+source run_sample.sh
 ```
 
 ## Results
@@ -39,7 +39,7 @@ source main_sample.sh
 # Kullback–Leibler Divergence
 To plot KL divergence, please run:
 ```
-python3 python run_flower.py --num_points 100 --M 5 --warm_up 1000 --plot_after 500 --n_epoch 200000
+python3 python plot_flower.py --num_points 100 --M 5 --warm_up 1000 --plot_after 500 --n_epoch 200000
 ```
 
 ## Results
