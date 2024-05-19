@@ -1,4 +1,8 @@
 # Reflected replica exchange Langevin Monte Carlo
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/haoyangzheng1996/r2SGLD/blob/main/LICENSE.md)
+
+
 This is the code repository for [Constrained Exploration via Reflected Replica Exchange Stochastic Gradient Langevin Dynamics](https://arxiv.org/abs/2405.07839) (to appear in ICML 2024).
 
 ```
