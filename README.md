@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/761a8e6f-f4dc-4502-8ac9-7785486d5274" alt="image" />
+</p>
+
 # Reflected replica exchange Langevin Monte Carlo
 
 [![Dependencies](https://img.shields.io/badge/Python-3.10.0-yellow)](https://github.com/haoyangzheng1996/r2SGLD/blob/main/env_image_classification.yml)
@@ -17,9 +22,6 @@ This is the code repository for [Constrained Exploration via Reflected Replica E
 # Introduction
 Replica exchange stochastic gradient Langevin dynamics (reSGLD) is an effective sampler for non-convex learning in large-scale datasets. However, the simulation may encounter stagnation issues when the high-temperature chain delves too deeply into the distribution tails. To tackle this issue, we propose reflected reSGLD (r2SGLD): an algorithm tailored for constrained non-convex exploration by utilizing reflection steps within a bounded domain. Theoretically, we observe that reducing the diameter of the domain enhances mixing rates, exhibiting a **quadratic** behavior. Empirically, we test its performance through extensive experiments, including identifying dynamical systems with physical constraints, simulations of constrained multi-modal distributions, and image classification tasks. The theoretical and empirical findings highlight the crucial role of constrained exploration in improving the simulation efficiency.
 
-<p align="center">
-  <img src="https://github.com/haoyangzheng1996/r2SGLD/assets/38525155/761a8e6f-f4dc-4502-8ac9-7785486d5274" alt="image" />
-</p>
 
 
 # Prerequisites
