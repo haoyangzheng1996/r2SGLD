@@ -36,7 +36,7 @@ if __name__ == '__main__':
     lr = args.lr
 
     sampler = reSGLD(
-        dim=dims, xinit=Xi, batch_size=batch_size, lr=3e-6, n_chain=2, flags=args)
+        dim=dims, xinit=Xi, batch_size=batch_size, lr=2e-6, n_chain=2, flags=args)
     epoch_run = tqdm(range(epoch), dynamic_ncols=True, smoothing=0.1, desc='Start Training: ')
     sample_record = []
 
