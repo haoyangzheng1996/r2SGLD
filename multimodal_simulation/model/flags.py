@@ -11,14 +11,12 @@ def get_flags():
     parser.add_argument("--seed", default=820, type=int, help="Random seed")
 
     parser.add_argument("--optimizer", default="sgld", type=str, help="Optimizer")
-    # parser.add_argument("--optimizer", default="svgd", type=str, help="Optimizer")
     # parser.add_argument("--optimizer", default="cyclic_sgld", type=str, help="Optimizer")
-    # parser.add_argument("--optimizer", default="csgld", type=str, help="Optimizer")
 
     parser.add_argument("--domain_type", default="flower", type=str, help="Optimizer")
     parser.add_argument("--radius", default=2, type=float, help="Learning rate 2")
 
-    parser.add_argument("--lr", default=3e-3, type=float, help="Learning rate 2")
+    parser.add_argument("--lr", default=5e-4, type=float, help="Learning rate 2")
     parser.add_argument("--regularization", default=None, type=float, help="L2 regularization")
     parser.add_argument("--n_epoch", default=1e5, type=int, help="Number of samples")
 
