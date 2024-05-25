@@ -13,19 +13,9 @@ def get_flags():
     parser.add_argument("--optimizer", default="sgld", type=str, help="Optimizer")
 
     parser.add_argument("--lr", default=5e-6, type=float, help="Learning rate")
-
-    # parser.add_argument("--dims", default=2, type=int, help="Parameter dimensions")
     parser.add_argument("--n_epoch", default=6e4, type=int, help="Number of epochs")
     parser.add_argument("--batch", default=4096, type=int, help="Batch size")
     parser.add_argument("--decay_rate", default=0.9999, type=float, help="Decay rate")
-
-
-    # parser.add_argument("--save_after", default=10, type=int, help="Save samples after number of steps")
-    # parser.add_argument("--plot_after", default=1000, type=int, help="Save plots after number of steps")
-    # parser.add_argument("--metric_after", default=100, type=int, help="Calculate metrics after number of steps")
-
-    # parser.add_argument("--lower", default=-2.5, type=float, help="grid lower bound")
-    # parser.add_argument("--upper", default=2.5, type=float, help="grid upper bound")
 
     parser.add_argument("--T_low", default=1, type=float, help="grid lower bound")
     parser.add_argument("--T_high", default=10, type=float, help="grid lower bound")
