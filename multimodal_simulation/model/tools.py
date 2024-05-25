@@ -50,31 +50,3 @@ class Helper:
         reflected_nu = nu - 2 * np.inner(nu, unit_normal) * unit_normal
         reflection_points = boundary + reflected_nu
         return boundary + reflected_nu, boundary
-
-
-class Sampler:
-    def __init__(self, myHelper, boundary=None, xinit=None, lr=0.1, T=1.0):
-        self.lr = lr
-        self.T = T
-        self.x = np.array(xinit)
-        self.list = np.empty((2, 0))
-        self.myHelper = myHelper
-
-    def reflection(self, prev_beta, beta):
-        if self.myHelper.inside_domain(beta):
-            return beta
-        else:
-            reflected_points, boundary = self.myHelper.get_reflection(prev_beta, beta)
-            """ when reflection fails in extreme cases (disappear with a small learning rate) """
-            if not self.myHelper.inside_domain(reflected_points):
-                return boundary
-
-            return reflected_points
-
-    def rgld_step(self, iters):
-        noise = sqrt(2. * self.lr * self.T) * normal(size=2)
-        proposal = self.x - self.lr * self.x + noise
-        self.x = self.reflection(self.x, proposal)
-
-        if iters % 50 == 0:
-            self.list = np.concatenate((self.list, self.x.reshape(-1, 1)), axis=1)
