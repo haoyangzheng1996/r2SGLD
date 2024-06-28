@@ -39,7 +39,7 @@ source run_sample.sh
 # Kullback–Leibler Divergence
 To plot KL divergence, please run:
 ```
-python3 python plot_flower.py --num_points 100 --M 5 --warm_up 1000 --plot_after 500 --n_epoch 200000
+python3 plot_flower.py --num_points 100 --M 5 --warm_up 1000 --plot_after 500 --n_epoch 200000
 ```
 
 ## Results
