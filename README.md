@@ -14,7 +14,7 @@ This is the code repository for [Constrained Exploration via Reflected Replica E
 @article{zheng2024constrained,
   title={Constrained Exploration via Reflected Replica Exchange Stochastic Gradient Langevin Dynamics},
   author={Zheng, Haoyang and Du, Hengrong and Feng, Qi and Deng, Wei and Lin, Guang},
-  journal={arXiv preprint arXiv:2405.07839},
+  journal={International Conference on Machine Learning},
   year={2024}
 }
 ```
